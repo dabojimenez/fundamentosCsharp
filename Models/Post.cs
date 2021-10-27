@@ -4,7 +4,7 @@ using System.Text;
 
 namespace fundamentosCsharp.Models
 {
-    public class Post
+    public class Post : IRequesTable
     {
         //public int userId { get; set; }
 

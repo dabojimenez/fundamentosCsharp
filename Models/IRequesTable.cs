@@ -4,10 +4,8 @@ using System.Text;
 
 namespace fundamentosCsharp.Models
 {
-    public interface IBebidaAlcoholica
+    public interface IRequesTable
     {
-        public int Alcohol { get; set; }
 
-        public void MaximoRecomendado();
     }
 }

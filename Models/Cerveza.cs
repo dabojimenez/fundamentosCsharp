@@ -4,8 +4,9 @@ using System.Text;
 
 namespace fundamentosCsharp.Models
 {
-    class Cerveza : Bebida, IBebidaAlcoholica
+    class Cerveza : Bebida, IBebidaAlcoholica, IRequesTable
     {
+        public int id { get; set; }
         public int Alcohol { get; set; }
         public string Marca { get; set; }
 

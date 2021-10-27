@@ -11,78 +11,34 @@ namespace fundamentosCsharp
 {
     class Program
     {
-        //              ++++++++++++++++++++++PROGRAMACION ASINCRONA
+        //              ++++++++++++++++++++++GENERICS
         /**
-         * Agregamos la palabra ( asyn ) y ( Task ), con su namespace ( using System.Threading.Tasks )
+         * 
          */
         static async Task Main(string[] args)
         {
-            ////                  =============      ++++METODO POST ( crear )
-            //string url = "https://localhost:44376/api/personas";
 
-            //var client = new HttpClient();
-
-            //Post post = new Post()
-            //{
-            //    nombre = "PAVADA 2",
-            //    telefono = "09000000",
-            //    correo = "PAVADA2@correo.com"
-            //};
-            ////serializaremos este objeto creado de post, con las siguiente slineas d ecodigo
-            //var data = JsonSerializer.Serialize<Post>(post);
-            //HttpContent content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
-
-            //var httpResponse = await client.PostAsync(url, content);
-
-            ////var httpResponse = await client.GetAsync(url);
-
-            //if (httpResponse.IsSuccessStatusCode)
-            //{
-            //    var result = await httpResponse.Content.ReadAsStringAsync();
-            //    //Ahora lo deserealizamos para poder manipularlo con c#
-            //    var postResult = JsonSerializer.Deserialize<Post>(result);
-
-            //    //var content = await httpResponse.Content.ReadAsStringAsync();
-            //    //List<Models.Post> posts = JsonSerializer.Deserialize<List<Models.Post>>(content);
-
-            //}
-
-            ////                  =============      ++++METODO PUT ( actualizar )
-            //string urlPut = "https://localhost:44376/api/personas/2";
-
-            //var client = new HttpClient();
-
-            //Post postPut = new Post()
-            //{
-            //    id = 2,
-            //    nombre = "put ID2",
-            //    telefono = "0900Put",
-            //    correo = "PUT id 2@correo.com"
-            //};
-
-            //var data = JsonSerializer.Serialize<Post>(postPut);
-            //HttpContent content = new StringContent(data, System.Text.Encoding.UTF8, "application/json");
-
-            //var httpResponse = await client.PutAsync(urlPut, content);
-
-            //if (httpResponse.IsSuccessStatusCode)
-            //{
-            //    var result = await httpResponse.Content.ReadAsStringAsync();
-            //    //var putResult = JsonSerializer.Deserialize<Post>(result);
-            //}
-
-            ////                  =============      ++++METODO DELETE ( eliminar )
-            string urlDelete = "https://localhost:44376/api/personas/4";
-            
-            var cliente = new HttpClient();
-
-            var httpResponse = await cliente.DeleteAsync(urlDelete);
-
-            if (httpResponse.IsSuccessStatusCode)
+            var cerveza = new Cerveza()
             {
-                var result = httpResponse.Content.ReadAsStringAsync();
-                var deletResult = JsonSerializer.Deserialize<Post>(result.Result.Trim());
-            }
+                Alcohol = 5,
+                cantidad = 30,
+                Marca = "CERVEZA MIA",
+                Nombre = "Cerveza mia"
+            };
+
+            var post = new Post()
+            {
+                correo = "david@coreeo.com",
+                nombre = "davi",
+                telefono = "123456789"
+            };
+
+            Service.SendRequest<Cerveza> service = new Service.SendRequest<Cerveza>();
+            var cervezaRespuesta = await service.Send(cerveza);
+
+            //  Enviamos la cnatidad de generecs solicitados
+            //Service.SendRequest<Post, Cerveza, , ,> servicePost = new Service.SendRequest<Post>();
+            //var postRespuesta = await servicePost.Send(post);
 
 
         }
