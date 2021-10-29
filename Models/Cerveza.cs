@@ -4,7 +4,7 @@ using System.Text;
 
 namespace fundamentosCsharp.Models
 {
-    class Cerveza : Bebida, IBebidaAlcoholica, IRequesTable
+    public class Cerveza : Bebida, IBebidaAlcoholica, IRequesTable
     {
         public int id { get; set; }
         public int Alcohol { get; set; }
