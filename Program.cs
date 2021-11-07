@@ -13,58 +13,52 @@ namespace fundamentosCsharp
 {
     class Program
     {
-        //              ++++++++++++++++++++++Control de situaciones inesperadas con Excepciones
-        /**Con ( using ) creamos un objeto y manda la funcion dispouse por defecto, liberando asi el objeto
+        //              ++++++++++++++++++++++Delegados, Func y Action
+        /**Con ( delegado ) podemos mandar funciones como parametros a otras funciones.
          * 
          */
+        //public delegate string Mostrar(string cadena);
+
         static async Task Main(string[] args)
         {
-            //try
-            //{
-            //    using (var archivo = new StreamWriter(@"C:\hola.txt"))
-            //    {
-            //        archivo.WriteLine("Q ola");
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //}
+            //============================FUNC
+            //El ultimo argumento que se colaca es el tipo de dato que regresa, y antes de este podemos agregar hasta 16 tipos que puede recibir
+            //Func<string, int> mostrar2 = Show;
+            //con el codigo anterior, d ela linea 26, ya no tendremos que declarar nuestro delegado, podmeos comentar el delegado declarado en la linea 20
+            //Todo(mostrar2);
+            //y nos ahorramos el crear el tipos de delegados
 
-            Service.SearcherBeer buscarCerveza = new Service.SearcherBeer();
+            //===========================ACTION
+            //Ahora el metodo NO RETORNA NADA solo ejecuta algo
+            //Action<string, string> mostar = Show2;
+            //          FUNCIONES ANONIMAS CON EXPRECIONES LAMDA Y USANDO LOS ACTION
+            Action<string, string> mostar =
+                (parametro1, parametro2) => Console.WriteLine(" CAFE " + " PAN");
+            Todo(mostar);
 
-            try
-            {
-                var obtenerCantidad = buscarCerveza.GetCantidad("JustaNOHAY");
-                Console.WriteLine("Si encontro");
-            }
-            catch ( FieldAccessException ex)
-            {
-                Console.WriteLine("Cache el Fiel Exception, "+ex);
-            }
-            //Cachamos una operacion invalida con ( InvalidOperationException )
-            catch (InvalidOperationException ex)
-            {
-                Console.WriteLine("Ha caido en una operaicon invalida, "+ex.Message);
-            }
-            //Cachamos nuestro error
-            catch (CervezaNotFoundException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-            //Exepcion general
-            catch (Exception ex)
-            {
-                Console.WriteLine("Algo no epserado");
-            }
-            
-            // Con ( finally ), siempre se va a ejecutar, ya que si algun archivo a caido en el ( catch ) ese archivo ya no se va a poder abrir
-            finally
-            {
-                Console.WriteLine("Siempre se ejecuta");
-            }
-
+            //===========================DELEGATE
+            //Mostrar mostrar = Show;
+            //Todo(mostrar);
         }
+
+        public static void Todo(Action<string,string> funcionFinal)
+        {
+            Console.WriteLine("hago algo");
+            //var retorno = funcionFinal("se invoca desde otra funcion");
+            //Console.WriteLine(retorno);
+            funcionFinal("se invoca desde otra funcion","La segunda cadna para le action");
+            Console.WriteLine("Algo mas aparte");
+        }
+
+        //public static int  Show(string texto)
+        //{
+        //    return texto.Count();
+        //}
+
+        //public static void Show2(string cade1, string cad2)
+        //{
+        //    Console.WriteLine(cade1 + cad2);
+        //}
 
     }
 }
