@@ -11,54 +11,56 @@ using fundamentosCsharp.Errors;
 
 namespace fundamentosCsharp
 {
-    class Program
+    static class Program
     {
-        //              ++++++++++++++++++++++Delegados, Func y Action
-        /**Con ( delegado ) podemos mandar funciones como parametros a otras funciones.
+        //              ++++++++++++++++++++++Predicate
+        /**Es la implementaciond e los delegados
+         * Es una sentencia que regresa VERDAD o FALSO, es algo logico, nos pemrite guardar la logica
          * 
          */
         //public delegate string Mostrar(string cadena);
 
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-            //============================FUNC
-            //El ultimo argumento que se colaca es el tipo de dato que regresa, y antes de este podemos agregar hasta 16 tipos que puede recibir
-            //Func<string, int> mostrar2 = Show;
-            //con el codigo anterior, d ela linea 26, ya no tendremos que declarar nuestro delegado, podmeos comentar el delegado declarado en la linea 20
-            //Todo(mostrar2);
-            //y nos ahorramos el crear el tipos de delegados
+            var numeros = new List<int> { 1, 2, 3456, 54321, 234567, 8, 76, 3, 45 };
 
-            //===========================ACTION
-            //Ahora el metodo NO RETORNA NADA solo ejecuta algo
-            //Action<string, string> mostar = Show2;
-            //          FUNCIONES ANONIMAS CON EXPRECIONES LAMDA Y USANDO LOS ACTION
-            Action<string, string> mostar =
-                (parametro1, parametro2) => Console.WriteLine(" CAFE " + " PAN");
-            Todo(mostar);
+            //Creacion d eun predicado
+            var predicado = new Predicate<int>(x => x % 2 == 0);
+            //negacion d eun predicado
+            Predicate<int> negativePredicate = x => !predicado(x);
 
-            //===========================DELEGATE
-            //Mostrar mostrar = Show;
-            //Todo(mostrar);
+            var dividers2 = numeros.FindAll(negativePredicate);
+
+            dividers2.ForEach(d => { Console.WriteLine(d); });
+
+            //          USANDO UNA CLASE
+            Console.WriteLine("USO DE PREDICADOS CON UNA CLASE LLAMADA CERVEZA");
+            Console.WriteLine("");
+            var listCerveza = new List<Cerveza> {
+                new Cerveza(){Alcohol=10, Marca="CN. S.A", Nombre="David"},
+                new Cerveza(){Alcohol=30, Marca="CERVEZA. S.A", Nombre="DavidC"},
+                new Cerveza(){Alcohol=50, Marca="NOVEDAD. S.A", Nombre="DavidJS"},
+                new Cerveza(){Alcohol=60, Marca="CN. S.A", Nombre="David12"},
+            };
+            var listCerveza2 = new List<Cerveza> {
+                new Cerveza(){Alcohol=5, Marca="CN. S.A", Nombre="Cerveza 5"},
+                new Cerveza(){Alcohol=100, Marca="CERVEZA. S.A", Nombre="cerveza 100"},
+                new Cerveza(){Alcohol=22, Marca="NOVEDAD. S.A", Nombre="Cerce 22"},
+                new Cerveza(){Alcohol=6, Marca="CN. S.A", Nombre="la de 6"},
+            };
+
+            listCerveza.ShowCervezaVeryHeavy(x => (x.Alcohol >= 15 && x.Alcohol < 100));
+            listCerveza2.ShowCervezaVeryHeavy( x => (x.Alcohol >= 15 && x.Alcohol <100));
+
         }
 
-        public static void Todo(Action<string,string> funcionFinal)
+        static bool IsDEvisible2(int x) => x % 2 == 0;
+
+        static void ShowCervezaVeryHeavy(this List<Cerveza> listCerveza, Predicate<Cerveza> condicion)
         {
-            Console.WriteLine("hago algo");
-            //var retorno = funcionFinal("se invoca desde otra funcion");
-            //Console.WriteLine(retorno);
-            funcionFinal("se invoca desde otra funcion","La segunda cadna para le action");
-            Console.WriteLine("Algo mas aparte");
+            var evilCerceza = listCerveza.FindAll(condicion);
+            evilCerceza.ForEach(c => Console.WriteLine(c.Nombre));
         }
-
-        //public static int  Show(string texto)
-        //{
-        //    return texto.Count();
-        //}
-
-        //public static void Show2(string cade1, string cad2)
-        //{
-        //    Console.WriteLine(cade1 + cad2);
-        //}
 
     }
 }
